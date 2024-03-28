@@ -1,0 +1,55 @@
+SELECT
+t2.processor_friendly_name as processorName,
+t2.approved_date as processedDate,
+t2.requester_sol_id as requestingSolId,
+t1.card_acceptor_code as merchantId,
+t3.name as merchantName,
+t15.last_name as contactName,
+t15.title as contactTitle,
+t15.phone_number as mobilePhone,
+t15.email as email,
+t9.address as merchantPhysicalAddr,
+t1.terminal_id as terminalId,
+t12.code as bankCode,
+t5.account_number as bankAccNo,
+t14.business_occupation_category_code as businessOccupationCode,
+t14.[description] as merchantCategoryCode,
+t13.code as stateCode,
+t7.visa_acquirer_number as visaAcquirerIdNumber,
+t7.verve_acquirer_number as verveAcquirerIdNumber,
+t7.mastercard_acquirer_number as mastercardAcquirerIdNumber,
+t12.code as terminalOwnerCode,
+t3.name as merchantAccountName,
+t8.name as ptspCode,
+t12.code as merchantAcctDomicileBankCode,
+'' as terminalGroupId,
+t4.tin as tin,
+t5.bvn as bvn,
+t11.name as merchantAddressLgaCode,
+'' as agentCode,
+'' as gpsInfo,
+t11.name as terminalAddressLgaCode,
+t9.address as terminalAddress,
+t14.pos_acquirer_id as merchantAcquirerId,
+t14.description as terminalModelDescription,
+t8.app_name as appName,
+t8.app_version as appVersion,
+'POS' as terminalType
+FROM acquired_pos_merchant_terminal_deployment t1
+INNER JOIN pos_terminal_request t2 ON t1.pos_terminal_request_id = t2.id
+LEFT JOIN acquired_pos_merchant t3 ON t1.acquired_pos_merchant_id = t3.id
+INNER JOIN customer t4 ON t3.customer_id = t4.id
+LEFT JOIN customer_account t5 ON t3.settlement_account = t5.id
+INNER JOIN pos_acquirer t6 ON t3.pos_acquirer_id = t6.id
+INNER JOIN pos_acquirer_setting t7 ON t6.setting_id = t7.id
+INNER JOIN ptsp t8 ON t1.ptsp_id = t8.id
+INNER JOIN location t9 ON t1.deployment_location_id = t9.id
+INNER JOIN country t10 ON t9.country_id = t10.id
+LEFT JOIN local_government_area t11 ON t9.local_government_id = t11.id
+INNER JOIN terminal_owner t12 ON t7.default_terminal_owner_id = t12.id
+LEFT JOIN state t13 ON t9.state_id = t13.id
+INNER JOIN pos_merchant_category_code t14 ON t3.merchant_category_code = t14.id
+LEFT JOIN contact_person t15 ON t9.default_contact_person = t15.id
+INNER JOIN bank_branch t16 ON t2.requester_sol_id = t16.code
+INNER JOIN state t17 ON t16.state_id = t17.id
+WHERE t2.processed_date BETWEEN '2024-03-07' AND dateadd(day, 1, '2024-03-28') AND t2.request_state='PENDING_SENDING_TO_NIBSS'
