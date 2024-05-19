@@ -182,7 +182,6 @@ const SeatBooking = ({navigation, route}: any) => {
                                                         color={COLORS.White}
                                                         size={FONTSIZE.size_24}
                                                         style={[
-                                                            styles.seatIcon,
                                                             subItem.taken && {color: COLORS.Grey},
                                                             subItem.selected && {color: COLORS.Orange}
                                                         ]}

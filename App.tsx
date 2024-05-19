@@ -5,10 +5,14 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import TabNav from "./src/navigators/Tabs/TabNav.tsx";
 import Details from "./src/screens/Details/Details.tsx";
 import SeatBooking from "./src/screens/SeatBooking/SeatBooking.tsx";
+import SplashScreen from 'react-native-splash-screen';
 
 
 const stack = createNativeStackNavigator();
 const App = () => {
+    useEffect(() => {
+        SplashScreen.hide()
+    }, []);
     return (
         <NavigationContainer>
             <stack.Navigator

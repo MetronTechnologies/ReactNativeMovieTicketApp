@@ -3,9 +3,7 @@ import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING} from "../../theme/t
 
 export const AppHeaderStyles = StyleSheet.create({
     container: {
-        display: "flex",
         flexDirection: 'row',
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
